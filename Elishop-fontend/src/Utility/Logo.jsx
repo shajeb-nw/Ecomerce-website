@@ -4,7 +4,7 @@ const Logo = () => {
   return (
     <div className="flex items-center justify-center gap-1.5">
       <img src={logo} alt="logo" width={35}/>
-      <h1 className="text-3xl font-bold text-color">Easy-Life</h1>
+      <h1 className="text-3xl font-bold text-color">EliShop</h1>
     </div>
   );
 };

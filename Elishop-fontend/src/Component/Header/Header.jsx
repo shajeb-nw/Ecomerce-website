@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaShoppingCart, FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../Utility/Logo";
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+import Theme from "../../Utility/Theme";
+import Container from "../../Utility/Container";
+import UserMenu from "../../Utility/UserMenu ";
 
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+
+  
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/shop" },
@@ -12,11 +16,11 @@ const Header = () => {
     { name: "Contact", path: "/contact" },
   ];
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-base-100 shadow">
+      <Container className="">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-         <Logo></Logo>
+          <Logo></Logo>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 items-center">
@@ -24,7 +28,7 @@ const Header = () => {
               <a
                 key={link.name}
                 href={link.path}
-                className="text-gray-700 hover:text-indigo-600 transition"
+                className=" hover:text-indigo-600 transition"
               >
                 {link.name}
               </a>
@@ -49,34 +53,10 @@ const Header = () => {
             </div>
 
             {/* User Profile */}
-            <div className="relative">
-              <FaUserCircle
-                size={28}
-                className="text-gray-700 cursor-pointer hover:text-indigo-600"
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-              />
-              {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-lg py-2">
-                  <a
-                    href="/profile"
-                    className="block px-4 py-2 hover:bg-indigo-100"
-                  >
-                    Profile
-                  </a>
-                  <a
-                    href="/orders"
-                    className="block px-4 py-2 hover:bg-indigo-100"
-                  >
-                    Orders
-                  </a>
-                  <a
-                    href="/logout"
-                    className="block px-4 py-2 hover:bg-indigo-100"
-                  >
-                    Logout
-                  </a>
-                </div>
-              )}
+            <div className="relative flex items-center">
+              <UserMenu></UserMenu>
+            
+              <Theme></Theme>
             </div>
           </div>
 
@@ -87,7 +67,7 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
