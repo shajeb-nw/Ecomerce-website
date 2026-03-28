@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaShoppingCart, FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../Utility/Logo";
 import Container from "../../Utility/Container";
 import UserMenu from "../../Utility/UserMenu ";
 import { NavLink } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
+import { AuthContext } from "../../Context/registerContext/AuthContext";
+import { ScaleLoader } from "react-spinners";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { loading } = useContext(AuthContext);
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Shop", path: "/shop" },
@@ -24,7 +26,6 @@ const Header = () => {
     >
       <Container>
         <div className="flex items-center justify-between h-16">
-
           {/* ✅ LEFT - LOGO */}
           <div className="flex-shrink-0">
             <Logo />
@@ -53,7 +54,6 @@ const Header = () => {
 
           {/* ✅ RIGHT - ICONS (Desktop) */}
           <div className="hidden md:flex items-center gap-5">
-
             {/* Cart */}
             <motion.div whileHover={{ scale: 1.1 }} className="relative">
               <FaShoppingCart size={22} />
@@ -63,12 +63,16 @@ const Header = () => {
             </motion.div>
 
             {/* User */}
-            <UserMenu />
+            {loading ? (
+            <ScaleLoader color="#fff" width={2} height={20}/>
+            ) : (
+              <UserMenu />
+            )}
           </div>
 
           {/* ✅ MOBILE RIGHT SIDE */}
           <div className="flex items-center gap-4 md:hidden">
-              <UserMenu />
+            <UserMenu />
             {/* Cart */}
             <div className="relative">
               <FaShoppingCart size={22} />
@@ -95,7 +99,6 @@ const Header = () => {
             className="md:hidden bg-white dark:bg-[#0b0f1a] border-t border-gray-200 dark:border-white/10 overflow-hidden"
           >
             <div className="px-4 py-4 space-y-3">
-
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
@@ -106,7 +109,6 @@ const Header = () => {
                   {link.name}
                 </NavLink>
               ))}
-
             </div>
           </motion.div>
         )}

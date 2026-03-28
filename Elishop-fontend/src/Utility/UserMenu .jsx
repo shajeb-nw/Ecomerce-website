@@ -8,14 +8,14 @@ import { toast } from "react-toastify";
 const UserMenu = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  const handelClick=async()=>{
-   try {
-    await signOut(auth)
-    toast.success("sign out successful")
-   } catch (error) {
-    toast.error(error.message)
-   }
-  }
+  const handelClick = async () => {
+    try {
+      await signOut(auth);
+      toast.success("sign out successful");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
     <div className="relative">
       {user ? (
@@ -41,7 +41,7 @@ const UserMenu = () => {
               </Link>
 
               <button
-               onClick={handelClick}
+                onClick={handelClick}
                 className="block background-color w-full px-4 py-2 hover:bg-indigo-100"
               >
                 <span>Logout</span>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Container from "../../Utility/Container";
 import logicon from "../../assets/agent-pending.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/registerContext/AuthContext";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -14,9 +14,11 @@ const Signup = () => {
   const { createUser, googleSignin } = useContext(AuthContext);
   const [preview, setPreview] = useState(null);
   const [loader, setLoader] = useState(false);
+  const navigate=useNavigate()
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -57,6 +59,9 @@ const Signup = () => {
 
       setLoader(false);
       toast.success("Account created successfully ✅");
+      reset()
+      setPreview(null);
+      navigate("/")
     } catch (error) {
       console.error(error.response?.data || error.message);
       toast.error(error.message);
@@ -68,6 +73,7 @@ const Signup = () => {
     try {
       await googleSignin();
       toast.success("Login With google successfully ✅");
+      navigate("/")
     } catch (error) {
       toast.error(error.message);
     }
