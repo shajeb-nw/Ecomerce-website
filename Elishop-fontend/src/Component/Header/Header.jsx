@@ -4,6 +4,7 @@ import Logo from "../../Utility/Logo";
 import Theme from "../../Utility/Theme";
 import Container from "../../Utility/Container";
 import UserMenu from "../../Utility/UserMenu ";
+import { NavLink } from "react-router";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
@@ -25,13 +26,13 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6 items-center">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.path}
+                to={link.path}
                 className=" hover:text-indigo-600 transition"
               >
                 {link.name}
-              </a>
+              </NavLink>
             ))}
 
             {/* Search Bar */}

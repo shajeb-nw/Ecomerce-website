@@ -46,7 +46,7 @@ const Login = () => {
           <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
           <p className="text-gray-500 mb-6">Login to your account</p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5  w-80 max-sm:w-70">
             
             {/* Email */}
             <div>

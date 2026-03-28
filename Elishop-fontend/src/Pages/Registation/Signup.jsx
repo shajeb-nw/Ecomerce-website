@@ -81,7 +81,7 @@ const Signup = () => {
           <h2 className="text-3xl text-color font-bold mb-2">Create Account</h2>
           <p className="text-gray-500 mb-6">Sign up to get started</p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-80">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-80 max-sm:w-70">
             {/* image uploader */}
             <div className="flex justify-center">
               <label className="relative cursor-pointer">
@@ -151,11 +151,7 @@ const Signup = () => {
               <input
                 {...register("password", {
                   required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Minimum 6 characters",
-                  },
-                })}
+                 })}
                 type="password"
                 placeholder="Enter your password"
                 className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
