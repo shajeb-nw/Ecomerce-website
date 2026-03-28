@@ -8,10 +8,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../Fairbase/Fairbase";
-
+import { useState } from "react";
+import { FaCamera } from "react-icons/fa";
 const Signup = () => {
   const { createUser, googleSignin } = useContext(AuthContext);
-
+  const [preview, setPreview] = useState(null);
+  const [loader, setLoader] = useState(false);
   const {
     register,
     handleSubmit,
@@ -21,6 +23,7 @@ const Signup = () => {
   // ✅ submit handler
   const onSubmit = async (data) => {
     try {
+      setLoader(true);
       const { email, password, name, image } = data;
 
       // create user
@@ -29,6 +32,8 @@ const Signup = () => {
       // image file
       const img = image?.[0];
       if (!img) {
+        setLoader(false);
+        toast.error("Please upload an image");
         return;
       }
 
@@ -50,6 +55,7 @@ const Signup = () => {
         photoURL: imageUrl,
       });
 
+      setLoader(false);
       toast.success("Account created successfully ✅");
     } catch (error) {
       console.error(error.response?.data || error.message);
@@ -75,7 +81,40 @@ const Signup = () => {
           <h2 className="text-3xl text-color font-bold mb-2">Create Account</h2>
           <p className="text-gray-500 mb-6">Sign up to get started</p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-80">
+            {/* image uploader */}
+            <div className="flex justify-center">
+              <label className="relative cursor-pointer">
+                {/* Circle Image */}
+                <div className="w-15 h-15 rounded-full overflow-hidden border-2 border-gray-300">
+                  <img
+                    src={preview || "https://i.ibb.co/4pDNDk1/avatar.png"}
+                    alt="profile"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Camera Icon */}
+                <div className="absolute bottom-0 right-0 bg-blue-500 p-2 rounded-full text-white">
+                  <FaCamera size={12} />
+                </div>
+
+                {/* Hidden Input */}
+                <input
+                  type="file"
+                  {...register("image", {
+                    onChange: (e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setPreview(URL.createObjectURL(file));
+                      }
+                    },
+                  })}
+                  className="hidden"
+                />
+              </label>
+            </div>
+
             {/* Name */}
             <div>
               <label className="block text-sm font-medium mb-1">
@@ -128,24 +167,13 @@ const Signup = () => {
               )}
             </div>
 
-            {/* Image */}
-            <div>
-              <label className="block text-sm font-medium mb-1">
-                Profile Image
-              </label>
-              <input
-                {...register("image")}
-                type="file"
-                className="w-full border rounded-lg px-4 py-2 bg-gray-50"
-              />
-            </div>
-
             {/* Button */}
             <button
               type="submit"
+              disabled={loader}
               className="w-full background-color text-white py-2 rounded-lg hover:opacity-90 transition"
             >
-              <span>Sign Up</span>
+              <span>{loader ? "Create Account.." : "Sign Up"}</span>
             </button>
 
             {/* Redirect */}
